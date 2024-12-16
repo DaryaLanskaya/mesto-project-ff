@@ -1,14 +1,18 @@
-function createCard(item,deleteEvent,likeEvent){ 
+function createCard(item,deleteEvent,likeEvent,imageEvent){ 
   const cardTemplate = document.querySelector('#card-template').content; 
   const cardClone = cardTemplate.querySelector('.card').cloneNode(true);
   const deleteButton = cardClone.querySelector('.card__delete-button');
   cardClone.querySelector('.card__title').textContent = item.name; 
   cardClone.querySelector('.card__image').src = item.link;
+  cardClone.querySelector('.card__image').alt = item.name;
   let cardImageModal = document.querySelector('.popup__image');
   let srcValueModal = item.link;
   deleteButton.addEventListener('click', deleteEvent); 
   const likeIcon = cardClone.querySelector('.card__like-button')
   likeIcon.addEventListener('click', likeEvent);
+  let cardImg =  cardClone.querySelector('.card__image');
+  cardImg.addEventListener('click', imageEvent); 
+
   return cardClone;
 };
 

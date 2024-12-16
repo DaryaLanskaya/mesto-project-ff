@@ -11,4 +11,4 @@ function modalClose(e) {
     modal.classList.remove('popup_is-opened');
 };
 
-export { openModal, modalClose} 
+export { openModal, modalClose } 

@@ -11,13 +11,14 @@ const cardList = document.querySelector('.places__list');
 function render() { 
   initialCards.forEach((item) => { 
  
-  const card = createCard(item,cardsDelete,cardsLike);
+  const card = createCard(item,cardsDelete,cardsLike,clickImage);
     cardList.append(card);
   });
 };
 
 render();
 
+const modalImg = document.querySelector('.popup_type_image');
 const createModal = document.querySelector('.popup_type_new-card');
 const createButton = document.querySelector('.profile__add-button');
 
@@ -45,6 +46,10 @@ createModal.addEventListener("click", (evt) => {
 
 editModal.addEventListener("click", (evt) => { 
   closePopupOverlay(evt,editModal);
+});
+
+modalImg.addEventListener("click", (evt) => { 
+  closePopupOverlay(evt,modalImg);
 });
 
 document.addEventListener('keydown', function(evt) {
@@ -90,16 +95,13 @@ function addCardForm(evt) {
   likeIcon.addEventListener('click', cardsLike);
 }
 
-const saveButtonNew =  document.querySelector('.popup__button_new');
+const saveButtonNew = createModal.querySelector('.popup__button');
 saveButtonNew.addEventListener('click', modalClose); 
 
 formElementCreate.addEventListener('submit', addCardForm); 
 
-const saveButton =  document.querySelector('.popup__button');  
+const saveButton =  editModal.querySelector('.popup__button');  
 saveButton.addEventListener('click', modalClose); 
-
-const saveButtonImg =  document.querySelector('.popup__button_img');  
-saveButtonImg.addEventListener('click', modalClose);
 
 function closePopupEsc(evt) { 
   if( evt.keyCode == 27 ){ 
@@ -110,14 +112,14 @@ function closePopupEsc(evt) {
 }
 
 function clickImage(event) { 
-  let modalImg = document.querySelector('.popup_type_image');
-  modalImg.classList.add('popup_is-opened');
-  let srcValue = event.currentTarget.src;
-  let cardImageModal = document.querySelector('.popup__image')
+  const srcValue = event.currentTarget.src;
+  const cardImageModal = modalImg.querySelector('.popup__image')
   cardImageModal.src = srcValue;
-
+  const altValue = event.currentTarget.alt;
+  const modalTitle = modalImg.querySelector('.popup__caption');
+  modalTitle.innerHTML = altValue; 
+  openModal(modalImg,modalClose);
 }
 
-let cardImg = document.querySelector('.card__image');
 
-cardImg.addEventListener('click', clickImage, modalClose); 
+

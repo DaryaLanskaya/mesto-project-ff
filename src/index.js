@@ -21,13 +21,20 @@ renderCard();
 const modalImg = document.querySelector('.popup_type_image');
 const createModal = document.querySelector('.popup_type_new-card');
 const createButton = document.querySelector('.profile__add-button');
+const editModal = document.querySelector('.popup_type_edit');
+const editButton = document.querySelector('.profile__edit-button');
+// const editModal = document.querySelector('.popup_type_edit');
+const nameInput = document.querySelector('.popup__input_type_name');
+const jobInput = document.querySelector('.popup__input_type_description');
+// const editModalCreate = document.querySelector('.popup_type_new-card');
+const designationInput = document.querySelector('.popup__input_type_card-name');
+// const saveButtonNew = createModal.querySelector('.popup__button');
+const modals = document.querySelector('.popup');
+const saveButton =  modals.querySelector('.popup__button');  
 
 createButton.addEventListener('click', function () {
   openModal(createModal,closeModal);
 });
-
-const editModal = document.querySelector('.popup_type_edit');
-const editButton = document.querySelector('.profile__edit-button');
 
 editButton.addEventListener('click', function () {
     openModal(editModal,closeModal);
@@ -56,10 +63,6 @@ document.addEventListener('keydown', function(evt) {
   closePopupEsc(evt);
 });
 
-const formElement = document.querySelector('.popup_type_edit');
-const nameInput = document.querySelector('.popup__input_type_name');
-const jobInput = document.querySelector('.popup__input_type_description');
-
 function handleFormSubmit(evt) {
   evt.preventDefault(); 
   const nameInputValue = nameInput.value;
@@ -70,10 +73,7 @@ function handleFormSubmit(evt) {
   jobTitle.textContent = jobInputValue;
 }
 
-formElement.addEventListener('submit', handleFormSubmit); 
-
-const formElementCreate = document.querySelector('.popup_type_new-card');
-const designationInput = document.querySelector('.popup__input_type_card-name');
+editModal.addEventListener('submit', handleFormSubmit); 
 
 function addCardForm(evt) {
   evt.preventDefault(); 
@@ -95,15 +95,12 @@ function addCardForm(evt) {
   const likeIcon = document.querySelector('.card__like-button') 
   likeIcon.addEventListener('click', likeСards);
   cardImage.addEventListener('click', clickImage); 
-  
 }
 
-const saveButtonNew = createModal.querySelector('.popup__button');
-saveButtonNew.addEventListener('click', closeModal); 
+// saveButtonNew.addEventListener('click', closeModal); 
 
-formElementCreate.addEventListener('submit', addCardForm); 
+createModal.addEventListener('submit', addCardForm); 
 
-const saveButton =  editModal.querySelector('.popup__button');  
 saveButton.addEventListener('click', closeModal); 
 
 function closePopupEsc(evt) { 

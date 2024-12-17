@@ -5,12 +5,12 @@ function createCard(item,deleteEvent,likeEvent,imageEvent){
   cardClone.querySelector('.card__title').textContent = item.name; 
   cardClone.querySelector('.card__image').src = item.link;
   cardClone.querySelector('.card__image').alt = item.name;
-  let cardImageModal = document.querySelector('.popup__image');
-  let srcValueModal = item.link;
+  const cardImageModal = document.querySelector('.popup__image');
+  const srcValueModal = item.link;
   deleteButton.addEventListener('click', deleteEvent); 
   const likeIcon = cardClone.querySelector('.card__like-button')
   likeIcon.addEventListener('click', likeEvent);
-  let cardImg =  cardClone.querySelector('.card__image');
+  const cardImg =  cardClone.querySelector('.card__image');
   cardImg.addEventListener('click', imageEvent); 
 
   return cardClone;

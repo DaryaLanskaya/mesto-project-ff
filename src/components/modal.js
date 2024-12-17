@@ -7,7 +7,7 @@ function openModal(modal,closeEvent){
 }
 
 function modalClose(e) { 
-    let modal = e.target.closest('.popup')
+    const modal = e.target.closest('.popup')
     modal.classList.remove('popup_is-opened');
 };
 

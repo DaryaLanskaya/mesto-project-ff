@@ -89,10 +89,13 @@ function addCardForm(evt) {
   const designationTitle =  document.querySelector('.card__new .card__title')
   designationTitle.textContent = designationInputValue;
   cardImage.src = linkInputValue;
+  cardImage.alt = designationInputValue
   let buttonDelete = document.querySelector('.card__new .card__delete-button');
   buttonDelete.addEventListener('click', cardsDelete);
   const likeIcon = document.querySelector('.card__like-button') 
   likeIcon.addEventListener('click', cardsLike);
+  cardImage.addEventListener('click', clickImage); 
+  
 }
 
 const saveButtonNew = createModal.querySelector('.popup__button');
@@ -120,6 +123,3 @@ function clickImage(event) {
   modalTitle.innerHTML = altValue; 
   openModal(modalImg,modalClose);
 }
-
-
-

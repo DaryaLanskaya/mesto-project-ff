@@ -1,36 +1,36 @@
 import './pages/index.css';
 
-import { createCard, cardsDelete, cardsLike} from './components/card.js'
+import { createCard, deleteCards, likeСards } from './components/card.js'
 
 import { initialCards } from './components/cards.js'
 
-import { openModal, modalClose} from './components/modal.js'
+import { openModal, closeModal} from './components/modal.js'
 
 const cardList = document.querySelector('.places__list');
 
-function render() { 
+function renderCard() { 
   initialCards.forEach((item) => { 
  
-  const card = createCard(item,cardsDelete,cardsLike,clickImage);
+  const card = createCard(item,deleteCards,likeСards,clickImage);
     cardList.append(card);
   });
 };
 
-render();
+renderCard();
 
 const modalImg = document.querySelector('.popup_type_image');
 const createModal = document.querySelector('.popup_type_new-card');
 const createButton = document.querySelector('.profile__add-button');
 
 createButton.addEventListener('click', function () {
-  openModal(createModal,modalClose);
+  openModal(createModal,closeModal);
 });
 
 const editModal = document.querySelector('.popup_type_edit');
 const editButton = document.querySelector('.profile__edit-button');
 
 editButton.addEventListener('click', function () {
-    openModal(editModal,modalClose);
+    openModal(editModal,closeModal);
 });
 
 function closePopupOverlay(evt) { 
@@ -72,45 +72,45 @@ function handleFormSubmit(evt) {
 
 formElement.addEventListener('submit', handleFormSubmit); 
 
-let formElementCreate = document.querySelector('.popup_type_new-card');
+const formElementCreate = document.querySelector('.popup_type_new-card');
 const designationInput = document.querySelector('.popup__input_type_card-name');
 
 function addCardForm(evt) {
   evt.preventDefault(); 
-  let cards= document.querySelector('.places__list'); 
-  let card= document.querySelector('.places__item'); 
-  let clone = card.cloneNode(true);
+  const cards= document.querySelector('.places__list'); 
+  const card= document.querySelector('.places__item'); 
+  const clone = card.cloneNode(true);
   clone.classList.add('card__new');
   cards.prepend(clone);
   const designationInputValue = designationInput.value;
-  let linkInput = document.querySelector('.popup__input_type_url');
-  let linkInputValue = linkInput.value;
+  const linkInput = document.querySelector('.popup__input_type_url');
+  const linkInputValue = linkInput.value;
   const cardImage = document.querySelector('.card__new .card__image')
   const designationTitle =  document.querySelector('.card__new .card__title')
   designationTitle.textContent = designationInputValue;
   cardImage.src = linkInputValue;
   cardImage.alt = designationInputValue
-  let buttonDelete = document.querySelector('.card__new .card__delete-button');
-  buttonDelete.addEventListener('click', cardsDelete);
+  const buttonDelete = document.querySelector('.card__new .card__delete-button');
+  buttonDelete.addEventListener('click', deleteCards);
   const likeIcon = document.querySelector('.card__like-button') 
-  likeIcon.addEventListener('click', cardsLike);
+  likeIcon.addEventListener('click', likeСards);
   cardImage.addEventListener('click', clickImage); 
   
 }
 
 const saveButtonNew = createModal.querySelector('.popup__button');
-saveButtonNew.addEventListener('click', modalClose); 
+saveButtonNew.addEventListener('click', closeModal); 
 
 formElementCreate.addEventListener('submit', addCardForm); 
 
 const saveButton =  editModal.querySelector('.popup__button');  
-saveButton.addEventListener('click', modalClose); 
+saveButton.addEventListener('click', closeModal); 
 
 function closePopupEsc(evt) { 
   if( evt.keyCode == 27 ){ 
     const popupOpen = document.querySelector('.popup_is-opened');
     popupOpen.classList.remove('popup_is-opened');
-    modalClose;
+    closeModal;
   }
 }
 
@@ -121,5 +121,5 @@ function clickImage(event) {
   const altValue = event.currentTarget.alt;
   const modalTitle = modalImg.querySelector('.popup__caption');
   modalTitle.innerHTML = altValue; 
-  openModal(modalImg,modalClose);
+  openModal(modalImg,closeModal);
 }

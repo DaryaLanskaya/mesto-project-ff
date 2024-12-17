@@ -16,13 +16,13 @@ function createCard(item,deleteEvent,likeEvent,imageEvent){
   return cardClone;
 };
 
-function cardsDelete(e) { 
+function deleteCards(e) { 
   const card = e.target.closest('.card')
   card.remove()
 };
 
-function cardsLike(evt) { 
+function likeСards(evt) { 
   evt.target.classList.toggle('card__like-button_is-active');
 };
 
-export{ createCard, cardsDelete, cardsLike}
+export{ createCard, deleteCards, likeСards}

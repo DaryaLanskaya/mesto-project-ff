@@ -4,7 +4,7 @@ import { createCard, deleteCards, likeСards } from './components/card.js'
 
 import { initialCards } from './components/cards.js'
 
-import { openModal, closeModal} from './components/modal.js'
+import { openPopup, closePopup, clearInputModal} from './components/modal.js'
 
 const cardList = document.querySelector('.places__list');
 
@@ -19,61 +19,94 @@ function renderCard() {
 renderCard();
 
 const modalImg = document.querySelector('.popup_type_image');
-const createModal = document.querySelector('.popup_type_new-card');
-const createButton = document.querySelector('.profile__add-button');
-const editModal = document.querySelector('.popup_type_edit');
-const editButton = document.querySelector('.profile__edit-button');
-// const editModal = document.querySelector('.popup_type_edit');
+const createCardModal = document.querySelector('.popup_type_new-card');
+const createCardButton = document.querySelector('.profile__add-button');
+const editProfileModal = document.querySelector('.popup_type_edit');
+const editProfileButton = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
-// const editModalCreate = document.querySelector('.popup_type_new-card');
 const designationInput = document.querySelector('.popup__input_type_card-name');
-// const saveButtonNew = createModal.querySelector('.popup__button');
-const modals = document.querySelector('.popup');
-const saveButton =  modals.querySelector('.popup__button');  
+const saveButtonProfile =  editProfileModal.querySelector('.popup__button');  
+const formCard = createCardModal.querySelector('.popup__form');
+const formProfile =  editProfileModal.querySelector('.popup__form');  
+const saveButtonCard = createCardModal.querySelector('.popup__button');
+const nameTitle =  document.querySelector('.profile__title');
+const popups = document.querySelectorAll('.popup')
+console.log(popups)
 
-createButton.addEventListener('click', function () {
-  openModal(createModal,closeModal);
+createCardButton.addEventListener('click', function () {
+  openPopup(createCardModal);
 });
 
-editButton.addEventListener('click', function () {
-    openModal(editModal,closeModal);
+editProfileButton.addEventListener('click', function () {
+    openPopup(editProfileModal);
 });
 
-function closePopupOverlay(evt) { 
-  const popupOpen = document.querySelector('.popup_is-opened');
-  if (evt.currentTarget === evt.target) {
-    popupOpen.classList.remove('popup_is-opened');
-  }
-};
 
-createModal.addEventListener("click", (evt) => { 
-  closePopupOverlay(evt,createModal);
-});
+// function closePopupOverlay(evt) { 
+//   const popupOpen = document.querySelector('.popup_is-opened');
+//   if (evt.currentTarget === evt.target) {
+//     popupOpen.classList.remove('popup_is-opened');
+//   }
+// };
 
-editModal.addEventListener("click", (evt) => { 
-  closePopupOverlay(evt,editModal);
-});
+// createCardModal.addEventListener("click", (evt) => { 
+//   closePopupOverlay(evt,createCardModal);
+// });
 
-modalImg.addEventListener("click", (evt) => { 
-  closePopupOverlay(evt,modalImg);
-});
+// editProfileModal.addEventListener("click", (evt) => { 
+//   closePopupOverlay(evt,editProfileModal);
+// });
 
-document.addEventListener('keydown', function(evt) {
-  closePopupEsc(evt);
-});
+// modalImg.addEventListener("click", (evt) => { 
+//   closePopupOverlay(evt,modalImg);
+// });
 
-function handleFormSubmit(evt) {
+// document.addEventListener('keydown', function(evt) {
+//   closePopupEsc(evt);
+// });
+
+// document.addEventListener('keydown', handleEscape); 
+// document.removeEventListener('keydown', handleEscape); 
+
+// popups.forEach((popup) => {
+//   popup.addEventListener('mousedown', (evt) => {
+//       if (evt.target.classList.contains('popup_is-opened')) {
+//           closePopup(popup)
+//       }
+//       if (evt.target.classList.contains('popup__close')) {
+//         closePopup(popup)
+//       }
+//   })
+
+// })
+
+
+
+// document.addEventListener('keydown', handleEscape); 
+// document.removeEventListener('keydown', handleEscape); 
+
+// function openPopup(popup) {
+//   document.addEventListener('keydown', handleEscape); 
+// }
+
+// function closePopup(popup) {
+//   document.removeEventListener('keydown', handleEscape); 
+// }
+
+// saveButton.addEventListener('click', closePopup); 
+
+function handleProfileFormSubmit(evt) {
   evt.preventDefault(); 
   const nameInputValue = nameInput.value;
   const jobInputValue = jobInput.value;
-  const nameTitle =  document.querySelector('.profile__title');
   const jobTitle =  document.querySelector('.profile__description');
   nameTitle.textContent = nameInputValue;
   jobTitle.textContent = jobInputValue;
+  closePopup(editProfileModal)
 }
 
-editModal.addEventListener('submit', handleFormSubmit); 
+editProfileModal.addEventListener('submit', handleProfileFormSubmit); 
 
 function addCardForm(evt) {
   evt.preventDefault(); 
@@ -95,28 +128,30 @@ function addCardForm(evt) {
   const likeIcon = document.querySelector('.card__like-button') 
   likeIcon.addEventListener('click', likeСards);
   cardImage.addEventListener('click', clickImage); 
+  console.log(createCardModal);
+  clearInputModal(createCardModal);
+  closePopup(createCardModal)
 }
 
-// saveButtonNew.addEventListener('click', closeModal); 
+createCardModal.addEventListener('submit', addCardForm); 
 
-createModal.addEventListener('submit', addCardForm); 
+// saveButtonProfile.addEventListener('click', closePopup); 
 
-saveButton.addEventListener('click', closeModal); 
-
-function closePopupEsc(evt) { 
-  if( evt.keyCode == 27 ){ 
-    const popupOpen = document.querySelector('.popup_is-opened');
-    popupOpen.classList.remove('popup_is-opened');
-    closeModal;
-  }
-}
+// saveButtonCard.addEventListener('click', closePopup); 
+// function closePopupEsc(evt) { 
+//   if(evt.key === 'Escape'){ 
+//     const popupOpen = document.querySelector('.popup_is-opened');
+//     popupOpen.classList.remove('popup_is-opened');
+//     closePopup;
+//   }    
+// }
 
 function clickImage(event) { 
-  const srcValue = event.currentTarget.src;
-  const cardImageModal = modalImg.querySelector('.popup__image')
-  cardImageModal.src = srcValue;
-  const altValue = event.currentTarget.alt;
-  const modalTitle = modalImg.querySelector('.popup__caption');
-  modalTitle.innerHTML = altValue; 
-  openModal(modalImg,closeModal);
+  // const srcValue = event.currentTarget.src;
+  // const cardImageModal = modalImg.querySelector('.popup__image')
+  // cardImageModal.src = srcValue;
+  // const altValue = event.currentTarget.alt;
+  // const modalTitle = modalImg.querySelector('.popup__caption');
+  // modalTitle.textContent = altValue; 
+  // openPopup(modalImg,closePopup);
 }

@@ -17,7 +17,7 @@ const jobInput = document.querySelector('.popup__input_type_description');
 const cardNameInput = document.querySelector('.popup__input_type_card-name');
 const nameTitle =  document.querySelector('.profile__title');
 const cardLinkInput = document.querySelector('.popup__input_type_url');
-
+const jobTitle =  document.querySelector('.profile__description');
 
 function renderCard() { 
   initialCards.forEach((item) => { 
@@ -33,14 +33,17 @@ createCardButton.addEventListener('click', function () {
 });
 
 editProfileButton.addEventListener('click', function () {
+  const nameTitleBlock = nameTitle.textContent; 
+  const jobTitleBlock = jobTitle.textContent; 
+  nameInput.value = nameTitleBlock;
+  jobInput.value = jobTitleBlock;
   openPopup(editProfileModal);
 });
- 
+
 function handleProfileFormSubmit(evt) {
   evt.preventDefault(); 
-  const nameInputValue = nameInput.value;
-  const jobInputValue = jobInput.value;
-  const jobTitle =  document.querySelector('.profile__description');
+  const nameInputValue = nameInput.value; 
+  const jobInputValue = jobInput.value; 
   nameTitle.textContent = nameInputValue;
   jobTitle.textContent = jobInputValue;
   closePopup(editProfileModal)

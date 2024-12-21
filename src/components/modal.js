@@ -32,9 +32,4 @@ function closePopupOverlay(evt) {
     }
   };
 
-function clearInputPopup(popup) {
-   const inputs = popup.querySelectorAll('input');
-   for (const input of inputs) input.value = '';
-}
-
-export { openPopup, closePopup, clearInputPopup } 
+export { openPopup, closePopup } 

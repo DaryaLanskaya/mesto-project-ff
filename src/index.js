@@ -4,7 +4,7 @@ import { createCard, deleteCards, likeСards } from './components/card.js'
 
 import { initialCards } from './components/cards.js'
 
-import { openPopup, closePopup, clearInputPopup} from './components/modal.js'
+import { openPopup, closePopup } from './components/modal.js'
 
 const cardList = document.querySelector('.places__list');
 const modalImg = document.querySelector('.popup_type_image');
@@ -18,6 +18,8 @@ const cardNameInput = document.querySelector('.popup__input_type_card-name');
 const nameTitle =  document.querySelector('.profile__title');
 const cardLinkInput = document.querySelector('.popup__input_type_url');
 const jobTitle =  document.querySelector('.profile__description');
+const cardImageModal = modalImg.querySelector('.popup__image');
+const modalTitle = modalImg.querySelector('.popup__caption');
 
 function renderCard() { 
   initialCards.forEach((item) => { 
@@ -53,6 +55,7 @@ editProfileModal.addEventListener('submit', handleProfileFormSubmit);
 
 function addCardForm(evt) { 
   evt.preventDefault();
+
   const nameInputValue = cardNameInput.value; 
   const linkInputValue = cardLinkInput.value; 
 
@@ -66,19 +69,16 @@ function addCardForm(evt) {
   cardList.prepend(card);
 
   closePopup(createCardModal);
-  clearInputPopup(createCardModal);
+
+  evt.target.reset()
 }
 
 createCardModal.addEventListener('submit', addCardForm); 
-
 function clickImage(item) { 
-  const cardImageModal = modalImg.querySelector('.popup__image')
   const itemName = item.name;
   const itemLink = item.link;
-  const modalTitle = modalImg.querySelector('.popup__caption');
   cardImageModal.src = itemLink;
   cardImageModal.alt = itemName;
   modalTitle.textContent = itemName; 
   openPopup(modalImg);
 }
-

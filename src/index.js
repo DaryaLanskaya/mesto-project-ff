@@ -43,6 +43,8 @@ renderCard();
 
 createCardButton.addEventListener('click', function () {
   openPopup(createCardModal);
+  clearValidation(createCardModal, validationConfig);
+  enableValidation(validationConfig);
 });
 
 editProfileButton.addEventListener('click', function () {
@@ -51,6 +53,8 @@ editProfileButton.addEventListener('click', function () {
   nameInput.value = nameTitleBlock;
   jobInput.value = jobTitleBlock;
   openPopup(editProfileModal);
+  clearValidation(editProfileModal, validationConfig);
+  enableValidation(validationConfig);
 });
 
 function handleProfileFormSubmit(evt) {
@@ -60,7 +64,7 @@ function handleProfileFormSubmit(evt) {
   nameTitle.textContent = nameInputValue;
   jobTitle.textContent = jobInputValue;
   closePopup(editProfileModal);
-  clearValidation(editProfileModal, validationConfig);
+  // clearValidation(editProfileModal, validationConfig);
 }
 
 editProfileModal.addEventListener('submit', handleProfileFormSubmit); 
@@ -83,7 +87,7 @@ function addCardForm(evt) {
   closePopup(createCardModal);
 
   evt.target.reset();
-  clearValidation(createCardModal, validationConfig);
+  // clearValidation(createCardModal, validationConfig);
 }
 
 createCardModal.addEventListener('submit', addCardForm); 
@@ -96,6 +100,6 @@ function clickImage(item) {
   openPopup(modalImg);
 }
 
-enableValidation(validationConfig);
+
 
 

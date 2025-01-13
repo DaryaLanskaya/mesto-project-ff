@@ -6,6 +6,8 @@ import { initialCards } from './components/cards.js'
 
 import { openPopup, closePopup } from './components/modal.js'
 
+import { enableValidation, clearValidation } from './components/validation.js'
+
 const cardList = document.querySelector('.places__list');
 const modalImg = document.querySelector('.popup_type_image');
 const createCardModal = document.querySelector('.popup_type_new-card');
@@ -21,6 +23,15 @@ const jobTitle =  document.querySelector('.profile__description');
 const cardImageModal = modalImg.querySelector('.popup__image');
 const modalTitle = modalImg.querySelector('.popup__caption');
 
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}; 
+
 function renderCard() { 
   initialCards.forEach((item) => { 
   const card = createCard(item,deleteCards,likeСards,clickImage);
@@ -35,6 +46,7 @@ createCardButton.addEventListener('click', function () {
 });
 
 editProfileButton.addEventListener('click', function () {
+  clearValidation(editProfileModal, validationConfig);
   const nameTitleBlock = nameTitle.textContent; 
   const jobTitleBlock = jobTitle.textContent; 
   nameInput.value = nameTitleBlock;
@@ -48,7 +60,8 @@ function handleProfileFormSubmit(evt) {
   const jobInputValue = jobInput.value; 
   nameTitle.textContent = nameInputValue;
   jobTitle.textContent = jobInputValue;
-  closePopup(editProfileModal)
+  closePopup(editProfileModal);
+  clearValidation(editProfileModal, validationConfig);
 }
 
 editProfileModal.addEventListener('submit', handleProfileFormSubmit); 
@@ -65,12 +78,13 @@ function addCardForm(evt) {
     link: linkInputValue,
   };
 
-  const card = createCard(item,deleteCards,likeСards,clickImage);
+  const card = createCard(item, deleteCards, likeСards, clickImage);
   cardList.prepend(card);
 
   closePopup(createCardModal);
 
-  evt.target.reset()
+  evt.target.reset();
+  clearValidation(createCardModal, validationConfig);
 }
 
 createCardModal.addEventListener('submit', addCardForm); 
@@ -82,3 +96,7 @@ function clickImage(item) {
   modalTitle.textContent = itemName; 
   openPopup(modalImg);
 }
+
+enableValidation(validationConfig);
+
+

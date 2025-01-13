@@ -46,7 +46,6 @@ createCardButton.addEventListener('click', function () {
 });
 
 editProfileButton.addEventListener('click', function () {
-  clearValidation(editProfileModal, validationConfig);
   const nameTitleBlock = nameTitle.textContent; 
   const jobTitleBlock = jobTitle.textContent; 
   nameInput.value = nameTitleBlock;

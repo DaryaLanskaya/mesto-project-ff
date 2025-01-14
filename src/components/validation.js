@@ -67,6 +67,13 @@ const checkInputValidity = (
         errorClass
      );
     }
+
+    if (inputElement.validity.patternMismatch) {
+      inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+    }
+    else {
+      inputElement.setCustomValidity("");
+    }
 };
 
 // Вешаем слушатель событий на каждый элемент

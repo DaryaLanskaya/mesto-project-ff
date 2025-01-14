@@ -64,7 +64,6 @@ function handleProfileFormSubmit(evt) {
   nameTitle.textContent = nameInputValue;
   jobTitle.textContent = jobInputValue;
   closePopup(editProfileModal);
-  // clearValidation(editProfileModal, validationConfig);
 }
 
 editProfileModal.addEventListener('submit', handleProfileFormSubmit); 
@@ -87,7 +86,6 @@ function addCardForm(evt) {
   closePopup(createCardModal);
 
   evt.target.reset();
-  // clearValidation(createCardModal, validationConfig);
 }
 
 createCardModal.addEventListener('submit', addCardForm); 

@@ -15,12 +15,7 @@
 }
 
 .popup__input_type_error {
-  /* color: #FF0000;
-  font-size: 12px;
-  line-height: 14.52px; */
   border-bottom: 1px solid #FF0000;
-  /* opacity: 0;
-  transition: 0.3s; */
 }
 
 .pupup__input-error {

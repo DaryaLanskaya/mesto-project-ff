@@ -24,6 +24,6 @@ npm run dev
 
 ### Скриншоты
 
-![](./screenshot_desk.jpg)
-![](./screenshot_form.png)
-![](./screenshot_mob.png)
+![](./screenshot_desk.jpg)  
+![](./screenshot_form.png)  
+![](./screenshot_mob.png)  

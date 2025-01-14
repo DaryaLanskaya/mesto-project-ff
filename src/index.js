@@ -34,7 +34,7 @@ const validationConfig = {
 
 function renderCard() { 
   initialCards.forEach((item) => { 
-  const card = createCard(item,deleteCards,likeСards,clickImage);
+  const card = createCard(item,false,deleteCards,likeСards,clickImage);
     cardList.append(card);
   });
 };
@@ -80,7 +80,7 @@ function addCardForm(evt) {
     link: linkInputValue,
   };
 
-  const card = createCard(item, deleteCards, likeСards, clickImage);
+  const card = createCard(item, true, deleteCards, likeСards, clickImage);
   cardList.prepend(card);
 
   closePopup(createCardModal);

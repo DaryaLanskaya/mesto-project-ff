@@ -116,7 +116,7 @@ const toggleButtonState = (
      buttonElement,
      inactiveButtonClass
      ) => {
-      console.log(hasInvalidInput(inputList));
+      
     if (hasInvalidInput(inputList)) {
       buttonElement.disabled = true;
       buttonElement.classList.add(inactiveButtonClass);
@@ -133,11 +133,7 @@ const clearValidation = (
     ) => {
 
     const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
-
-    console.log(inputList)
     const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
-
-    console.log(buttonElement)
     buttonElement.classList.add(validationConfig.inactiveButtonClass);
     buttonElement.disabled = true;
     

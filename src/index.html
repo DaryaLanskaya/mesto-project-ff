@@ -117,8 +117,41 @@
       <p class="popup__caption"></p>
     </div>
   </div>
+
+  <div class="popup popup_type_avatar popup_is-animated">
+    <div class="popup__content">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form class="popup__form" name="update-avatar" novalidate>
+        <label class="popup__field">
+          <input
+            type="url"
+            name="link"
+            pattern="https?://.+"
+            class="popup__input popup__input_type_link"
+            placeholder="Ссылка на картинку"
+            id="link-input" 
+            required
+          >
+          <span class="pupup__input-error link-input-error">Вы пропустили это поле.</span>
+        </label>
+        <button type="submit" class="button popup__button">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_type_delete popup_is-animated">
+    <div class="popup__content">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Вы уверены?</h3>
+        <form class="popup__form" name="confirmation-delete" novalidate>
+        <button type="submit" class="button popup__button">Да</button>
+      </form>
+    </div>
+  </div>
+
 </div>
-<script src="./components/cards.js"></script>-
+<script src="./components/cards.js"></script>
 <script src="./components/index.js" defer></script>
 
 <template id="card-template">
@@ -127,7 +160,10 @@
     <button type="button" class="card__delete-button"></button>
     <div class="card__description">
       <h2 class="card__title"> </h2>
-      <button type="button" class="card__like-button"></button>
+      <div class="card__like-content">
+        <button type="button" class="card__like-button"></button>
+        <div class="card__like-counter">0</div>
+      </div>
     </div>
   </li>
 </template>

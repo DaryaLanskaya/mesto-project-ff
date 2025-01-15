@@ -1,6 +1,6 @@
 import './pages/index.css';
 
-import { createCard, deleteCards, likeСards } from './components/card.js'
+import { createCard, likeСards } from './components/card.js'
 
 import { initialCards } from './components/cards.js'
 
@@ -14,6 +14,8 @@ const createCardModal = document.querySelector('.popup_type_new-card');
 const createCardButton = document.querySelector('.profile__add-button');
 const editProfileModal = document.querySelector('.popup_type_edit');
 const editProfileButton = document.querySelector('.profile__edit-button');
+const deleteCardModal = document.querySelector('.popup_type_delete');
+const deleteCardButton = document.querySelector('.card__delete-button');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
 const cardNameInput = document.querySelector('.popup__input_type_card-name');
@@ -34,7 +36,7 @@ const validationConfig = {
 
 function renderCard() { 
   initialCards.forEach((item) => { 
-  const card = createCard(item,false,deleteCards,likeСards,clickImage);
+  const card = createCard(item,false,openForm,likeСards,clickImage);
     cardList.append(card);
   });
 };
@@ -46,6 +48,14 @@ createCardButton.addEventListener('click', function () {
   clearValidation(createCardModal, validationConfig);
   enableValidation(validationConfig);
 });
+
+// deleteCardButton.addEventListener('click', function () {
+//   openPopup(deleteCardModal);
+// });
+
+// if(deleteCardButton) {
+//   console.log(55);
+// }
 
 editProfileButton.addEventListener('click', function () {
   const nameTitleBlock = nameTitle.textContent; 
@@ -80,7 +90,7 @@ function addCardForm(evt) {
     link: linkInputValue,
   };
 
-  const card = createCard(item, true, deleteCards, likeСards, clickImage);
+  const card = createCard(item, true, openForm, likeСards, clickImage);
   cardList.prepend(card);
 
   closePopup(createCardModal);
@@ -98,6 +108,7 @@ function clickImage(item) {
   openPopup(modalImg);
 }
 
-
-
-
+function openForm() { 
+  const deleteCardModal = document.querySelector('.popup_type_delete');
+  openPopup(deleteCardModal);
+}

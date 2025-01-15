@@ -1,4 +1,4 @@
-function createCard(item,deleteEnabled = false,openEvent,likeEvent,imageEvent){  
+function createCard(item,deleteEnabled = false, openEvent, deleteEvent, likeEvent,imageEvent){  
   const cardTemplate = document.querySelector('#card-template').content; 
   const cardClone = cardTemplate.querySelector('.card').cloneNode(true); 
   const deleteButton = cardClone.querySelector('.card__delete-button');
@@ -37,7 +37,7 @@ function createCard(item,deleteEnabled = false,openEvent,likeEvent,imageEvent){
   // {
   //   deleteButton.classList.add('button-hidden');
   // }
-
+ 
   return cardClone;
 };
 
@@ -47,12 +47,14 @@ function createCard(item,deleteEnabled = false,openEvent,likeEvent,imageEvent){
 //   deleteModal.classList.add('popup_is-opened');
 // };
 
-// function deleteCards (e) {
-//   const card = e.target.closest('.card');
-// }
+function deleteCards() { 
+  // const card = e.target.closest('.card')
+  // card.remove()
+  console.log(888)
+};
 
 function likeСards(evt) { 
   evt.target.classList.toggle('card__like-button_is-active');
 };
 
-export { createCard, likeСards }
+export { createCard, deleteCards, likeСards }

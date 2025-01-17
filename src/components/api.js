@@ -13,12 +13,25 @@ const getDataResponse = (res) => {
 };
 
 // Загрузка информации о пользователе с сервера
-function loadInformUser(res) {
+function loadDataUser(res) {
     fetch(config.headers + '/users/me', {
         method: 'GET', 
         headers: config.headers,
       })
-    getDataResponse(res);
+
+    .then(getDataResponse(res))
+
+    .then((data) => {
+       const nameAvatar = document.querySelector('profile__title');
+       const imgAvatar = document.querySelector('profile__image');
+       const aboutAvatar  = document.querySelector('profile__description');
+       const currentUserId = data._id;
+       imgAvatar.style.backgroundImage  = data.avatar;
+    //    imgAvatar.style.backgroundImage  = `url(${data.avatar})`;
+       nameAvatar.textContent  = data.name;
+       aboutAvatar.textContent  = data.about;
+       console.log('ID пользователя:', currentUserId);
+    })
 }
   
-loadInformUser();
+loadDataUser();

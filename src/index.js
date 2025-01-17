@@ -107,4 +107,32 @@ function openForm() {
   });
 }
 
+// function openInfo() { 
+// fetch('https://nomoreparties.co/v1/wff-cohort-30/cards', {
+//   headers: {
+//     authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
+//   }
+// })
+//   .then(res => res.json())
+//   .then((result) => {
+//     console.log(result);
+//   }); 
+// }
 
+// openInfo();
+
+function loadInformUser() {
+  fetch('https://nomoreparties.co/v1/wff-cohort-30/cards', {
+      method: 'GET', 
+      headers: {
+        authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
+        "Content-Type": "application/json; charset=UTF-8"
+      }
+    })
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  }); 
+}
+
+loadInformUser();

@@ -7,10 +7,6 @@ function createCard(item,deleteEnabled = false, openEvent, deleteEvent, likeEven
   cardClone.querySelector('.card__title').textContent = item.name; 
   cardClone.querySelector('.card__image').src = item.link;
   cardClone.querySelector('.card__image').alt = item.name;
-  
-  // const deleteCard = cardClone.querySelector('.card__delete-button');
-  // deleteCard.addEventListener('click', openForm); 
-
   const likeIcon = cardClone.querySelector('.card__like-button'); 
   likeIcon.addEventListener('click', likeEvent); 
 

@@ -5,30 +5,11 @@ const PATH = "https://nomoreparties.co/v1/wff-cohort-30";
 // Запрос к серверу
 const config = {
   baseUrl: PATH,
-  // cohortId: "wff-cohort-30",
   headers: {
     authorization: "354f64aa-f3b9-471d-8401-f8aca7049e54",
     "Content-Type": "application/json",
   }
 }
-
-// Выведение объектов в консоль
-function openInfo() { 
-  fetch(PATH + '/cards', {
-    headers: {
-      authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
-    }
-  })
-
-    .then(res => res.json())
-
-    .then((result) => {
-      console.log(result);
-    }); 
-  }
-  
-  openInfo();
-
 
 //  Получение ответных данных от сервера
 const handleResponse = (res) => {
@@ -38,6 +19,7 @@ const handleResponse = (res) => {
 // Загрузка информации о пользователе с сервера (GET-запрос)
 export const getDataUser = () => {
   return fetch(PATH + '/users/me', {
+  // return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
   })
 
@@ -125,5 +107,6 @@ export const updateAvatar  = (url) => {
 };
 
 console.log(getDataCards())
+console.log(getDataUser())
 
 // loadDataUser();

@@ -8,6 +8,8 @@ import { openPopup, closePopup } from './components/modal.js'
 
 import { enableValidation, clearValidation } from './components/validation.js'
 
+import { getDataUser, getDataCards, updateDataUser } from './components/api.js'
+
 const cardList = document.querySelector('.places__list');
 const modalImg = document.querySelector('.popup_type_image');
 const createCardModal = document.querySelector('.popup_type_new-card');
@@ -107,32 +109,84 @@ function openForm() {
   });
 }
 
-// function openInfo() { 
-// fetch('https://nomoreparties.co/v1/wff-cohort-30/cards', {
-//   headers: {
-//     authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
-//   }
-// })
+// function loadInformUser() {
+//   fetch('https://nomoreparties.co/v1/wff-cohort-30/cards', {
+//       method: 'GET', 
+//       headers: {
+//         authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
+//         "Content-Type": "application/json; charset=UTF-8"
+//       }
+//     })
 //   .then(res => res.json())
 //   .then((result) => {
 //     console.log(result);
 //   }); 
 // }
 
-// openInfo();
+// loadInformUser();
 
-function loadInformUser() {
-  fetch('https://nomoreparties.co/v1/wff-cohort-30/cards', {
-      method: 'GET', 
-      headers: {
-        authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
-        "Content-Type": "application/json; charset=UTF-8"
-      }
-    })
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-  }); 
-}
+// Запрос к серверу
+// const config = {
+//   baseUrl: 'https://nomoreparties.co/v1/wff-cohort-30/',
+//   headers: {
+//     authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
+//     'Content-Type': 'application/json',
+//   }
+// }
 
-loadInformUser();
+// //  Получение ответных данных от сервера
+// const getDataResponse = (res) => {
+//   return res.ok ? res.json() : Promise.reject(`Что-то пошло не так: ${res.status}`);
+// };
+
+// // Загрузка информации о пользователе с сервера
+// function loadDataUser(res) {
+//   console.log(3333)
+//   fetch(config.baseUrl + '/users/me', {
+//       method: 'GET', 
+//       headers: config.headers,
+//     })
+
+//   .then(getDataResponse(res))
+
+//   .then((data) => {
+//      const nameAvatar = document.querySelector('profile__title');
+//      const imgAvatar = document.querySelector('profile__image');
+//      const aboutAvatar  = document.querySelector('profile__description');
+//      const currentUserId = data._id;
+//      imgAvatar.style.backgroundImage  = data.avatar;
+//   //    imgAvatar.style.backgroundImage  = `url(${data.avatar})`;
+//      nameAvatar.textContent  = data.name;
+//      aboutAvatar.textContent  = data.about;
+//      console.log('ID пользователя:', currentUserId);
+//   })
+// }
+
+// loadDataUser();
+
+
+// Загрузка информации о пользователе с сервера
+// function loadDataUser() {
+//   console.log(3333)
+//   return fetch(PATH + "/users/me", {
+//       method: "GET", 
+//       headers: config.headers,
+//     })
+
+// .then((res) => getResponseData(res))
+
+// .then((data) => {
+//      const nameAvatar = document.querySelector('profile__title');
+//      const imgAvatar = document.querySelector('profile__image');
+//      const aboutAvatar  = document.querySelector('profile__description');
+//      const currentUserId = data._id;
+//      imgAvatar.style.backgroundImage  = `url(${data.avatar})`;
+//      nameAvatar.textContent  = data.name;
+//      aboutAvatar.textContent  = data.about;
+//      console.log('ID пользователя:', currentUserId);
+//   })
+// }
+
+//  loadDataUser();
+
+ 

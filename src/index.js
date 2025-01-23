@@ -24,6 +24,8 @@ const cardLinkInput = document.querySelector('.popup__input_type_url');
 const jobTitle =  document.querySelector('.profile__description');
 const cardImageModal = modalImg.querySelector('.popup__image');
 const modalTitle = modalImg.querySelector('.popup__caption');
+const updateAvatarModal = document.querySelector('.popup_type_avatar');
+const imgAvatar = document.querySelector('.profile__image');   
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -46,6 +48,12 @@ renderCard();
 createCardButton.addEventListener('click', function () {
   openPopup(createCardModal);
   clearValidation(createCardModal, validationConfig);
+  enableValidation(validationConfig);
+});
+
+imgAvatar.addEventListener('click', function () {
+  openPopup(updateAvatarModal);
+  clearValidation(updateAvatarModal, validationConfig);
   enableValidation(validationConfig);
 });
 

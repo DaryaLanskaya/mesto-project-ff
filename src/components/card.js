@@ -1,3 +1,5 @@
+import { removeCard, setLike, removeLike } from './api.js'
+
 function createCard(item,deleteEnabled = false, openEvent, deleteEvent, likeEvent,imageEvent){  
   const cardTemplate = document.querySelector('#card-template').content; 
   const cardClone = cardTemplate.querySelector('.card').cloneNode(true); 

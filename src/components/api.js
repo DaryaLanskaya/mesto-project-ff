@@ -1,50 +1,3 @@
-// // Запрос к серверу
-// const config = {
-//     baseUrl: 'https://nomoreparties.co/v1/wff-cohort-30/',
-//     headers: {
-//       authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
-//       'Content-Type': 'application/json',
-//     }
-// }
-
-// //  Получение ответных данных от сервера
-// const getDataResponse = (res) => {
-//     return res.ok ? res.json() : Promise.reject(`Что-то пошло не так: ${res.status}`);
-// };
-
-// // Загрузка информации о пользователе с сервера
-// function loadDataUser(res) {
-//     console.log(3333)
-//     fetch(config.baseUrl + '/users/me', {
-//         method: 'GET', 
-//         headers: config.headers,
-//       })
-
-//     .then(getDataResponse(res))
-
-//     .then((data) => {
-//        const nameAvatar = document.querySelector('profile__title');
-//        const imgAvatar = document.querySelector('profile__image');
-//        const aboutAvatar  = document.querySelector('profile__description');
-//        const currentUserId = data._id;
-//        imgAvatar.style.backgroundImage  = data.avatar;
-//     //    imgAvatar.style.backgroundImage  = `url(${data.avatar})`;
-//        nameAvatar.textContent  = data.name;
-//        aboutAvatar.textContent  = data.about;
-//        console.log('ID пользователя:', currentUserId);
-//     })
-// }
-  
-// loadDataUser(res);
-
-
-// export { config, getDataResponse, loadDataUser }
-
-
-
-
-
-
 // 24.01.2025
 
 const PATH = "https://nomoreparties.co/v1/wff-cohort-30";
@@ -115,7 +68,7 @@ export const updateDataUser  = ({ name, about }) => {
 };
 
 // Добавление новой карточки на сервер (POST-запрос)
-export const addDataCard  = ({ name, link }) => {
+export const addCard  = ({ name, link }) => {
   return fetch(PATH + '/cards', {
     method: 'POST',
     headers: config.headers,
@@ -129,7 +82,7 @@ export const addDataCard  = ({ name, link }) => {
 };
 
 // Удаление карточки  иконка (DELETE-запрос)
-export const deleteDataCard  = (cardID) => {
+export const removeCard  = (cardID) => {
   return fetch(PATH + `/cards/${cardID}`, {
     method: 'DELETE',
     headers: config.headers,
@@ -138,7 +91,38 @@ export const deleteDataCard  = (cardID) => {
   .then(handleResponse);
 };
 
-// Постановка и снятие лайка
+// Постановка лайка у карточки (PUT-запрос)
+export const setLike  = (cardID) => {
+  return fetch(PATH + `/cards/likes/${cardID}`, {
+    method: 'PUT',
+    headers: config.headers,
+  })
+
+  .then(handleResponse);
+};
+
+// Снятие лайка у карточки (DELETE-запрос)
+export const removeLike  = (cardID) => {
+  return fetch(PATH + `/cards/likes/${cardID}`, {
+    method: 'DELETE',
+    headers: config.headers,
+  })
+
+  .then(handleResponse);
+};
+
+// Обновление аватара пользователя (PATCH-запрос)
+export const updateAvatar  = (url) => {
+  return fetch(PATH + '/users/me/avatar', {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({ 
+      avatar: url
+    }),
+  })
+
+  .then(handleResponse);
+};
 
 console.log(getDataCards())
 

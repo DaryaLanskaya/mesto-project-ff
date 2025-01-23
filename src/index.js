@@ -8,7 +8,7 @@ import { openPopup, closePopup } from './components/modal.js'
 
 import { enableValidation, clearValidation } from './components/validation.js'
 
-import { getDataUser, getDataCards, updateDataUser } from './components/api.js'
+import { getDataUser, getDataCards, updateDataUser, addCard, updateAvatar } from './components/api.js'
 
 const cardList = document.querySelector('.places__list');
 const modalImg = document.querySelector('.popup_type_image');

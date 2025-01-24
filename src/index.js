@@ -8,7 +8,7 @@ import { openPopup, closePopup } from './components/modal.js'
 
 import { enableValidation, clearValidation } from './components/validation.js'
 
-import { getDataUser, getDataCards, updateDataUser, addCard, updateAvatar } from './components/api.js'
+import { getDataUser, getDataCards, updateDataUser, addCard, updateAvatarResponse } from './components/api.js'
 
 const cardList = document.querySelector('.places__list');
 const modalImg = document.querySelector('.popup_type_image');
@@ -24,8 +24,14 @@ const cardLinkInput = document.querySelector('.popup__input_type_url');
 const jobTitle =  document.querySelector('.profile__description');
 const cardImageModal = modalImg.querySelector('.popup__image');
 const modalTitle = modalImg.querySelector('.popup__caption');
+
 const updateAvatarModal = document.querySelector('.popup_type_avatar');
 const imgAvatar = document.querySelector('.profile__image');   
+const linkAvatar = document.querySelector('.popup__input_type_card-avatar');   
+const btnAvatar = updateAvatarModal.querySelector('.popup__button'); 
+const modalEditElement = document.querySelector(".popup__form");
+
+console.log(btnAvatar)
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -51,11 +57,6 @@ createCardButton.addEventListener('click', function () {
   enableValidation(validationConfig);
 });
 
-imgAvatar.addEventListener('click', function () {
-  openPopup(updateAvatarModal);
-  clearValidation(updateAvatarModal, validationConfig);
-  enableValidation(validationConfig);
-});
 
 editProfileButton.addEventListener('click', function () {
   const nameTitleBlock = nameTitle.textContent; 
@@ -116,6 +117,63 @@ function openForm() {
   closePopup(deleteCardModal);
   });
 }
+
+
+// 1. Редактирование аватара профиля
+function avatarModalSubmit(evt) {
+  evt.preventDefault();
+  const btnAvatar = updateAvatarModal.querySelector('.popup__button'); 
+  const submitButtonText = btnAvatar.textContent;
+  console.log(submitButtonText)
+  btnAvatar.textContent = "Сохранение ...";
+  updateAvatarResponse(linkAvatar.value) // PATCH
+  
+  .then((data) => {
+    imgAvatar.style.backgroundImage = `url(${data.avatar})`;
+    closePopup(updateAvatarModal);
+    updateAvatarModal.reset();
+  })
+
+  .catch((err) => {
+    console.error(`Ошибка ${err}.Скорее всего не получилось загрузить 
+    аватар в профиль.`);
+  })
+
+  .finally(() => (btnAvatar.textContent = submitButtonText));
+}
+
+// Слушаетель - при нажатии на кнопки отправки в модальном окне
+imgAvatar.addEventListener('click', function () {
+  openPopup(updateAvatarModal);
+  // nameInput.value = nameTitle.textContent;
+  // jobInput.value = jobTitle.textContent
+  clearValidation(updateAvatarModal, validationConfig);
+  enableValidation(validationConfig);
+});
+
+btnAvatar.addEventListener("click", avatarModalSubmit);
+
+
+// const btnAvatars = updateAvatarModal.querySelector('.popup__button'); 
+// console.log(btnAvatars.textContent);
+
+
+// btnAvatars.textContent = "Сохранение ...";
+
+
+// Promise.all([getDataUser(), getDataCards()])
+//   .then(([userData, cardsData]) => {
+//     // Получили ответ от сервера в виде объекта пользователя и карточек
+//     // Сортируем карточки, чтобы вверху сайта отображались последние добавленные
+//       console.log(userData,cardsData)
+//   })
+//   .catch((err) => {
+//     console.log(
+//       `Ошибка. Не получилось записать информацию о 
+//       пользователе страницы, либо отобразить карточки: ${err}`
+//     );
+//   });
+
 
 // function loadInformUser() {
 //   fetch('https://nomoreparties.co/v1/wff-cohort-30/cards', {

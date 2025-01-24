@@ -18,7 +18,7 @@ const handleResponse = (res) => {
 
 // Загрузка информации о пользователе с сервера (GET-запрос)
 export const getDataUser = () => {
-  return fetch(PATH + '/users/me', {
+  return fetch(PATH + '/users/me ', {
   // return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
   })
@@ -94,7 +94,7 @@ export const removeLike  = (cardID) => {
 };
 
 // Обновление аватара пользователя (PATCH-запрос)
-export const updateAvatar  = (url) => {
+export const updateAvatarResponse  = (url) => {
   return fetch(PATH + '/users/me/avatar', {
     method: 'PATCH',
     headers: config.headers,
@@ -106,7 +106,6 @@ export const updateAvatar  = (url) => {
   .then(handleResponse);
 };
 
-console.log(getDataCards())
-console.log(getDataUser())
+
 
 // loadDataUser();

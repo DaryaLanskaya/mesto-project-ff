@@ -42,21 +42,36 @@ const validationConfig = {
   errorClass: 'popup__error_visible'
 }; 
 
-function renderCard() { 
-  initialCards.forEach((item) => { 
-  const card = createCard(item, false, openForm, deleteCards, likeСards, clickImage);
-    cardList.append(card);
+// function renderCard() { 
+//   initialCards.forEach((item) => { 
+//   const card = createCard(item, false, openForm, deleteCards, likeСards, clickImage);
+//     cardList.append(card);
+//   });
+// };
+
+// renderCard();
+
+// 3.Показываем карточки на странице
+const renderCard = (cardsData, userId) => {
+  cardsData.forEach((item) => {
+    const cardElement = createCard(
+      item,
+      userId,
+      false,
+      openForm,
+      deleteCards,
+      likeСards,
+      clickImage
+    );
+    cardList.prepend(cardElement);
   });
 };
-
-renderCard();
 
 createCardButton.addEventListener('click', function () {
   openPopup(createCardModal);
   clearValidation(createCardModal, validationConfig);
   enableValidation(validationConfig);
 });
-
 
 editProfileButton.addEventListener('click', function () {
   const nameTitleBlock = nameTitle.textContent; 
@@ -142,117 +157,37 @@ function avatarModalSubmit(evt) {
   .finally(() => (btnAvatar.textContent = submitButtonText));
 }
 
-// Слушаетель - при нажатии на кнопки отправки в модальном окне
+// Слушатель - при нажатии на кнопку отправки в модальном окне
 imgAvatar.addEventListener('click', function () {
   openPopup(updateAvatarModal);
-  // nameInput.value = nameTitle.textContent;
-  // jobInput.value = jobTitle.textContent
   clearValidation(updateAvatarModal, validationConfig);
   enableValidation(validationConfig);
 });
 
 btnAvatar.addEventListener("click", avatarModalSubmit);
 
+// 2. Промис карточек
+Promise.all([getDataUser(), getDataCards()]) 
+  .then(([userData, cardsData]) => { // Ответ от сервера в виде объекта пользователя и карточек
+    //  userId = userData._id;
+    nameTitle.textContent = userData.name;
+    jobTitle.textContent = userData.about;
+    imgAvatar.style.backgroundImage = `url(${userData.avatar})`;
+    renderCard(cardsData, userData._id);
+  })
+  //   cards.forEach((data) => {
+  //     const card = createCard(
+  //       data,
+  //       {
 
-// const btnAvatars = updateAvatarModal.querySelector('.popup__button'); 
-// console.log(btnAvatars.textContent);
-
-
-// btnAvatars.textContent = "Сохранение ...";
-
-
-// Promise.all([getDataUser(), getDataCards()])
-//   .then(([userData, cardsData]) => {
-//     // Получили ответ от сервера в виде объекта пользователя и карточек
-//     // Сортируем карточки, чтобы вверху сайта отображались последние добавленные
-//       console.log(userData,cardsData)
-//   })
-//   .catch((err) => {
-//     console.log(
-//       `Ошибка. Не получилось записать информацию о 
-//       пользователе страницы, либо отобразить карточки: ${err}`
-//     );
-//   });
-
-
-// function loadInformUser() {
-//   fetch('https://nomoreparties.co/v1/wff-cohort-30/cards', {
-//       method: 'GET', 
-//       headers: {
-//         authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
-//         "Content-Type": "application/json; charset=UTF-8"
-//       }
-//     })
-//   .then(res => res.json())
-//   .then((result) => {
-//     console.log(result);
-//   }); 
-// }
-
-// loadInformUser();
-
-// Запрос к серверу
-// const config = {
-//   baseUrl: 'https://nomoreparties.co/v1/wff-cohort-30/',
-//   headers: {
-//     authorization: '354f64aa-f3b9-471d-8401-f8aca7049e54',
-//     'Content-Type': 'application/json',
-//   }
-// }
-
-// //  Получение ответных данных от сервера
-// const getDataResponse = (res) => {
-//   return res.ok ? res.json() : Promise.reject(`Что-то пошло не так: ${res.status}`);
-// };
-
-// // Загрузка информации о пользователе с сервера
-// function loadDataUser(res) {
-//   console.log(3333)
-//   fetch(config.baseUrl + '/users/me', {
-//       method: 'GET', 
-//       headers: config.headers,
-//     })
-
-//   .then(getDataResponse(res))
-
-//   .then((data) => {
-//      const nameAvatar = document.querySelector('profile__title');
-//      const imgAvatar = document.querySelector('profile__image');
-//      const aboutAvatar  = document.querySelector('profile__description');
-//      const currentUserId = data._id;
-//      imgAvatar.style.backgroundImage  = data.avatar;
-//   //    imgAvatar.style.backgroundImage  = `url(${data.avatar})`;
-//      nameAvatar.textContent  = data.name;
-//      aboutAvatar.textContent  = data.about;
-//      console.log('ID пользователя:', currentUserId);
-//   })
-// }
-
-// loadDataUser();
-
-
-// Загрузка информации о пользователе с сервера
-// function loadDataUser() {
-//   console.log(3333)
-//   return fetch(PATH + "/users/me", {
-//       method: "GET", 
-//       headers: config.headers,
-//     })
-
-// .then((res) => getResponseData(res))
-
-// .then((data) => {
-//      const nameAvatar = document.querySelector('profile__title');
-//      const imgAvatar = document.querySelector('profile__image');
-//      const aboutAvatar  = document.querySelector('profile__description');
-//      const currentUserId = data._id;
-//      imgAvatar.style.backgroundImage  = `url(${data.avatar})`;
-//      nameAvatar.textContent  = data.name;
-//      aboutAvatar.textContent  = data.about;
-//      console.log('ID пользователя:', currentUserId);
-//   })
-// }
-
-//  loadDataUser();
-
- 
+  //       },
+  //       userId
+  //     );
+  //     cardList.prepend(card);
+  // });
+  .catch((err) => {
+    console.log(
+      `Ошибка. Не получилось записать информацию о 
+      пользователе страницы, либо отобразить карточки: ${err}`
+    );
+});

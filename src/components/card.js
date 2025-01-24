@@ -1,6 +1,14 @@
 import { removeCard, setLike, removeLike } from './api.js'
 
-function createCard(item,deleteEnabled = false, openEvent, deleteEvent, likeEvent,imageEvent){  
+function createCard(
+    item,
+    userId,
+    deleteEnabled = false,
+    openEvent,
+    deleteEvent,
+    likeEvent,
+    imageEvent
+  ){  
   const cardTemplate = document.querySelector('#card-template').content; 
   const cardClone = cardTemplate.querySelector('.card').cloneNode(true); 
   const deleteButton = cardClone.querySelector('.card__delete-button');

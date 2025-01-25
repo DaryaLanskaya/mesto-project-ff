@@ -1,6 +1,6 @@
 import './pages/index.css';
 
-import { createCard, deleteCards, likeСards } from './components/card.js'
+import { createCard, likeСards, deleteСard } from './components/card.js'
 
 import { initialCards } from './components/cards.js'
 
@@ -8,7 +8,7 @@ import { openPopup, closePopup } from './components/modal.js'
 
 import { enableValidation, clearValidation } from './components/validation.js'
 
-import { getDataUser, getDataCards, updateDataUser, addCard, updateAvatarResponse } from './components/api.js'
+import { getDataUser, getDataCards, updateDataUser, addCard, removeCard, updateAvatarResponse } from './components/api.js'
 
 const cardList = document.querySelector('.places__list');
 const modalImg = document.querySelector('.popup_type_image');
@@ -30,8 +30,8 @@ const imgAvatar = document.querySelector('.profile__image');
 const linkAvatar = document.querySelector('.popup__input_type_card-avatar');   
 const btnAvatar = updateAvatarModal.querySelector('.popup__button') 
 const modalEditElement = document.querySelector('.popup__form');
-
-console.log(btnAvatar)
+const deleteCardModal = document.querySelector('.popup_type_delete');
+const deleteAssent = deleteCardModal.querySelector('.popup__button');
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -42,24 +42,13 @@ const validationConfig = {
   errorClass: 'popup__error_visible'
 }; 
 
-// function renderCard() { 
-//   initialCards.forEach((item) => { 
-//   const card = createCard(item, false, openForm, deleteCards, likeСards, clickImage);
-//     cardList.append(card);
-//   });
-// };
-
-// renderCard();
-
 // 3.Показываем карточки на странице
 const renderCard = (cardsData, userId) => {
   cardsData.forEach((item) => {
     const cardElement = createCard(
       item,
       userId,
-      false,
-      openForm,
-      deleteCards,
+      openFormDeleteCard,
       likeСards,
       clickImage
     );
@@ -98,16 +87,13 @@ function addCardForm(evt) {
   evt.preventDefault();
   const submitButtonText = btnNewCard.textContent;
   btnNewCard.textContent = "Сохранение ...";
-  console.log(cardNameInput.value, cardLinkInput.value)
   addCard(cardNameInput.value, cardLinkInput.value) // POST
 
   .then((item) => {
     const newCardElement = createCard(  // Создаем новую карточку (передаем данные) - при успешном выполнении запроса
       item,
       item.owner._id, // ID владельца 
-      true,
-      openForm,
-      deleteCards,
+      openFormDeleteCard,
       likeСards,
       clickImage
      ) 
@@ -122,23 +108,6 @@ function addCardForm(evt) {
   })
 
   .finally(() => (btnNewCard.textContent = submitButtonText));
-
-
-  // const nameInputValue = cardNameInput.value; 
-  // const linkInputValue = cardNameInput.value; 
-
-  // const item = 
-  // {
-  //   name: nameInputValue,
-  //   link: linkInputValue,
-  // };
-
-  // const card = createCard(item, true, openForm, deleteCards, likeСards, clickImage);
-  // cardList.prepend(card);
-
-  // closePopup(createCardModal);
-
-  // evt.target.reset();
 }
 
 createCardModal.addEventListener('submit', addCardForm); 
@@ -151,14 +120,29 @@ function clickImage(item) {
   openPopup(modalImg);
 }
 
-function openForm() { 
-  const deleteCardModal = document.querySelector('.popup_type_delete');
-  const deleteAssent = document.querySelector('.popup_type_delete .popup__button');
+// 4. При открытии модального окна удаления - передаем ID карточки в кнопку модалки
+function openFormDeleteCard(id) { 
+  deleteAssent.dataset.id = id; // Приравнивание ID
   openPopup(deleteCardModal);
-  deleteAssent.addEventListener('click', function () {
-  closePopup(deleteCardModal);
-  });
 }
+
+deleteAssent.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  const submitButtonText = deleteAssent.textContent;
+  deleteAssent.textContent = "Удаление ...";
+  removeCard(deleteAssent.dataset.id)
+
+  .then((data) => {
+    deleteСard(deleteAssent.dataset.id)
+    closePopup(deleteCardModal);
+  })
+
+  .catch((err) => {
+    console.error(`Ошибка ${err}. Не получилось поизвести удаление карточки.`);
+  })
+
+  .finally(() => (deleteAssent.textContent = submitButtonText));
+});
 
 // 1. Редактирование аватара профиля
 function avatarModalSubmit(evt) {
@@ -193,23 +177,12 @@ btnAvatar.addEventListener("click", avatarModalSubmit);
 // 2. Промис карточек
 Promise.all([getDataUser(), getDataCards()]) 
   .then(([userData, cardsData]) => { // Ответ от сервера в виде объекта пользователя и карточек
-    //  userId = userData._id;
-    console.log(userData, cardsData)
     nameTitle.textContent = userData.name;
     jobTitle.textContent = userData.about;
     imgAvatar.style.backgroundImage = `url(${userData.avatar})`;
     renderCard(cardsData, userData._id);
   })
-  //   cards.forEach((data) => {
-  //     const card = createCard(
-  //       data,
-  //       {
-
-  //       },
-  //       userId
-  //     );
-  //     cardList.prepend(card);
-  // });
+  
   .catch((err) => {
     console.log(
       `Ошибка. Не получилось записать информацию о 

@@ -19,7 +19,6 @@ const handleResponse = (res) => {
 // Загрузка информации о пользователе с сервера (GET-запрос)
 export const getDataUser = () => {
   return fetch(PATH + '/users/me ', {
-  // return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
   })
 
@@ -51,7 +50,6 @@ export const updateDataUser  = (name, about) => {
 
 // Добавление новой карточки на сервер (POST-запрос)
 export const addCard  = (name, link) => {
-  console.log(name, link)
   return fetch(PATH + '/cards', {
     method: 'POST',
     headers: config.headers,
@@ -65,8 +63,8 @@ export const addCard  = (name, link) => {
 };
 
 // Удаление карточки  иконка (DELETE-запрос)
-export const removeCard  = (cardID) => {
-  return fetch(PATH + `/cards/${cardID}`, {
+export const removeCard  = (cardId) => {
+  return fetch(PATH + `/cards/${cardId}`, {
     method: 'DELETE',
     headers: config.headers,
   })
@@ -75,8 +73,8 @@ export const removeCard  = (cardID) => {
 };
 
 // Постановка лайка у карточки (PUT-запрос)
-export const setLike  = (cardID) => {
-  return fetch(PATH + `/cards/likes/${cardID}`, {
+export const setLike  = (cardId) => {
+  return fetch(PATH + `/cards/likes/${cardId}`, {
     method: 'PUT',
     headers: config.headers,
   })
@@ -85,8 +83,8 @@ export const setLike  = (cardID) => {
 };
 
 // Снятие лайка у карточки (DELETE-запрос)
-export const removeLike  = (cardID) => {
-  return fetch(PATH + `/cards/likes/${cardID}`, {
+export const removeLike  = (cardId) => {
+  return fetch(PATH + `/cards/likes/${cardId}`, {
     method: 'DELETE',
     headers: config.headers,
   })
@@ -106,7 +104,3 @@ export const updateAvatarResponse  = (url) => {
 
   .then(handleResponse);
 };
-
-
-
-// loadDataUser();

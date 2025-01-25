@@ -24,7 +24,7 @@ function createCard(
   cardImg.addEventListener("click", () => { 
     imageEvent(item);
   }); 
-  
+
   if(deleteEnabled) {
     deleteButton.addEventListener('click', openEvent); 
 
@@ -56,8 +56,9 @@ function createCard(
 function deleteCards() { 
   // const card = e.target.closest('.card')
   // card.remove()
-  console.log(888)
 };
+
+
 
 function likeСards(evt) { 
   evt.target.classList.toggle('card__like-button_is-active');

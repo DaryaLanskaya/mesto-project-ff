@@ -13,23 +13,23 @@ import { getDataUser, getDataCards, updateDataUser, addCard, updateAvatarRespons
 const cardList = document.querySelector('.places__list');
 const modalImg = document.querySelector('.popup_type_image');
 const createCardModal = document.querySelector('.popup_type_new-card');
-const createCardButton = document.querySelector('.profile__add-button');
+const createProfileButton = document.querySelector('.profile__add-button');
 const editProfileModal = document.querySelector('.popup_type_edit');
 const editProfileButton = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
 const cardNameInput = document.querySelector('.popup__input_type_card-name');
+const btnNewCard = createCardModal.querySelector('.popup__button');
 const nameTitle =  document.querySelector('.profile__title');
 const cardLinkInput = document.querySelector('.popup__input_type_url');
 const jobTitle =  document.querySelector('.profile__description');
 const cardImageModal = modalImg.querySelector('.popup__image');
 const modalTitle = modalImg.querySelector('.popup__caption');
-
 const updateAvatarModal = document.querySelector('.popup_type_avatar');
 const imgAvatar = document.querySelector('.profile__image');   
 const linkAvatar = document.querySelector('.popup__input_type_card-avatar');   
-const btnAvatar = updateAvatarModal.querySelector('.popup__button'); 
-const modalEditElement = document.querySelector(".popup__form");
+const btnAvatar = updateAvatarModal.querySelector('.popup__button') 
+const modalEditElement = document.querySelector('.popup__form');
 
 console.log(btnAvatar)
 
@@ -67,7 +67,7 @@ const renderCard = (cardsData, userId) => {
   });
 };
 
-createCardButton.addEventListener('click', function () {
+createProfileButton.addEventListener('click', function () {
   openPopup(createCardModal);
   clearValidation(createCardModal, validationConfig);
   enableValidation(validationConfig);
@@ -96,22 +96,49 @@ editProfileModal.addEventListener('submit', handleProfileFormSubmit);
 
 function addCardForm(evt) { 
   evt.preventDefault();
+  const submitButtonText = btnNewCard.textContent;
+  btnNewCard.textContent = "Сохранение ...";
+  console.log(cardNameInput.value, cardLinkInput.value)
+  addCard(cardNameInput.value, cardLinkInput.value) // POST
 
-  const nameInputValue = cardNameInput.value; 
-  const linkInputValue = cardLinkInput.value; 
+  .then((item) => {
+    const newCardElement = createCard(  // Создаем новую карточку (передаем данные) - при успешном выполнении запроса
+      item,
+      item.owner._id, // ID владельца 
+      true,
+      openForm,
+      deleteCards,
+      likeСards,
+      clickImage
+     ) 
 
-  const item = 
-  {
-    name: nameInputValue,
-    link: linkInputValue,
-  };
+    cardList.prepend(newCardElement);
+    closePopup(createCardModal);
+    evt.target.reset();
+  })
 
-  const card = createCard(item, true, openForm, deleteCards, likeСards, clickImage);
-  cardList.prepend(card);
+  .catch((err) => {
+    console.error(`Ошибка ${err}. Не получилось создать новую карточку.`);
+  })
 
-  closePopup(createCardModal);
+  .finally(() => (btnNewCard.textContent = submitButtonText));
 
-  evt.target.reset();
+
+  // const nameInputValue = cardNameInput.value; 
+  // const linkInputValue = cardNameInput.value; 
+
+  // const item = 
+  // {
+  //   name: nameInputValue,
+  //   link: linkInputValue,
+  // };
+
+  // const card = createCard(item, true, openForm, deleteCards, likeСards, clickImage);
+  // cardList.prepend(card);
+
+  // closePopup(createCardModal);
+
+  // evt.target.reset();
 }
 
 createCardModal.addEventListener('submit', addCardForm); 
@@ -133,13 +160,10 @@ function openForm() {
   });
 }
 
-
 // 1. Редактирование аватара профиля
 function avatarModalSubmit(evt) {
   evt.preventDefault();
-  const btnAvatar = updateAvatarModal.querySelector('.popup__button'); 
   const submitButtonText = btnAvatar.textContent;
-  console.log(submitButtonText)
   btnAvatar.textContent = "Сохранение ...";
   updateAvatarResponse(linkAvatar.value) // PATCH
   
@@ -170,6 +194,7 @@ btnAvatar.addEventListener("click", avatarModalSubmit);
 Promise.all([getDataUser(), getDataCards()]) 
   .then(([userData, cardsData]) => { // Ответ от сервера в виде объекта пользователя и карточек
     //  userId = userData._id;
+    console.log(userData, cardsData)
     nameTitle.textContent = userData.name;
     jobTitle.textContent = userData.about;
     imgAvatar.style.backgroundImage = `url(${userData.avatar})`;

@@ -36,7 +36,7 @@ export const getDataCards = () => {
 };
 
 // Редактирование профиля - отредактированные данные профиля должны сохраняться на сервере (PATCH-запрос)
-export const updateDataUser  = ({ name, about }) => {
+export const updateDataUser  = (name, about) => {
   return fetch(PATH + '/users/me', {
     method: 'PATCH',
     headers: config.headers,
@@ -50,7 +50,8 @@ export const updateDataUser  = ({ name, about }) => {
 };
 
 // Добавление новой карточки на сервер (POST-запрос)
-export const addCard  = ({ name, link }) => {
+export const addCard  = (name, link) => {
+  console.log(name, link)
   return fetch(PATH + '/cards', {
     method: 'POST',
     headers: config.headers,

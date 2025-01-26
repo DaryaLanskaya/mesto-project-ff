@@ -8,7 +8,7 @@ https://github.com/DaryaLanskaya/mesto-project-ff.git
 На странице находятся несколько форм для взаимодействия с пользователями.  
 
 ## Live
-[http://localhost:8080/](http://localhost:8080/) 
+[https://daryalanskaya.github.io/mesto-project-ff/](https://daryalanskaya.github.io/mesto-project-ff/) 
 
 ### Автор
 [https://github.com/DaryaLanskaya](https://github.com/DaryaLanskaya) 

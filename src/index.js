@@ -15,6 +15,7 @@ const modalImg = document.querySelector('.popup_type_image');
 const createCardModal = document.querySelector('.popup_type_new-card');
 const createProfileButton = document.querySelector('.profile__add-button');
 const editProfileModal = document.querySelector('.popup_type_edit');
+const btnUpdateModal = editProfileModal.querySelector('.popup__button');
 const editProfileButton = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
@@ -32,7 +33,6 @@ const btnAvatar = updateAvatarModal.querySelector('.popup__button')
 const modalEditElement = document.querySelector('.popup__form');
 const deleteCardModal = document.querySelector('.popup_type_delete');
 const deleteAssent = deleteCardModal.querySelector('.popup__button');
-
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -74,11 +74,22 @@ editProfileButton.addEventListener('click', function () {
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault(); 
-  const nameInputValue = nameInput.value; 
-  const jobInputValue = jobInput.value; 
-  nameTitle.textContent = nameInputValue;
-  jobTitle.textContent = jobInputValue;
-  closePopup(editProfileModal);
+  const submitButtonText = btnUpdateModal.textContent;
+  btnUpdateModal.textContent = "Сохранение ...";
+
+  updateDataUser(nameInput.value, jobInput.value) // PATH
+ 
+  .then((data) => {
+    nameTitle.textContent = data.name;
+    jobTitle.textContent = data.about;
+    closePopup(editProfileModal);
+  })
+
+  .catch((err) => {
+    console.error(`Ошибка ${err}. Не получилось обновить данные.`);
+  })
+
+  .finally(() => (btnUpdateModal.textContent = submitButtonText));
 }
 
 editProfileModal.addEventListener('submit', handleProfileFormSubmit); 
@@ -111,6 +122,7 @@ function addCardForm(evt) {
 }
 
 createCardModal.addEventListener('submit', addCardForm); 
+
 function clickImage(item) { 
   const itemName = item.name;
   const itemLink = item.link;
@@ -154,7 +166,8 @@ function avatarModalSubmit(evt) {
   .then((data) => {
     imgAvatar.style.backgroundImage = `url(${data.avatar})`;
     closePopup(updateAvatarModal);
-    updateAvatarModal.reset();
+  
+    evt.target.reset();
   })
 
   .catch((err) => {
@@ -172,7 +185,7 @@ imgAvatar.addEventListener('click', function () {
   enableValidation(validationConfig);
 });
 
-btnAvatar.addEventListener("click", avatarModalSubmit);
+updateAvatarModal.addEventListener("submit", avatarModalSubmit);
 
 // 2. Промис карточек
 Promise.all([getDataUser(), getDataCards()]) 
@@ -182,7 +195,7 @@ Promise.all([getDataUser(), getDataCards()])
     imgAvatar.style.backgroundImage = `url(${userData.avatar})`;
     renderCard(cardsData, userData._id);
   })
-  
+
   .catch((err) => {
     console.log(
       `Ошибка. Не получилось записать информацию о 

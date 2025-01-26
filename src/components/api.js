@@ -1,5 +1,3 @@
-// 24.01.2025
-
 const PATH = "https://nomoreparties.co/v1/wff-cohort-30";
 
 // Запрос к серверу

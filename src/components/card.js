@@ -1,4 +1,4 @@
-import { removeCard, setLike, removeLike } from './api.js'
+import { setLike, removeLike } from './api.js'
 
 function createCard(
     item,

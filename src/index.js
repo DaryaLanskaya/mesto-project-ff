@@ -199,4 +199,3 @@ Promise.all([getDataUser(), getDataCards()])
     );
 });
 
-

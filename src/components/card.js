@@ -5,7 +5,7 @@ function createCard(
     userId,
     openEvent,
     likeEvent,
-    imageEvent,
+    openImageEvent,
   ){  
   const cardTemplate = document.querySelector('#card-template').content; 
   const cardClone = cardTemplate.querySelector('.card').cloneNode(true); 
@@ -22,7 +22,7 @@ function createCard(
   likeIcon.addEventListener('click', (evt) => likeEvent(evt, item._id, counterLike));
 
   cardImg.addEventListener("click", () => { 
-    imageEvent(item);
+    openImageEvent(item);
   }); 
 
   if(containsLike){ // Вывод лайкнутых карточек при перезагрузке страницы

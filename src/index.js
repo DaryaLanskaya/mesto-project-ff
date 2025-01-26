@@ -2,8 +2,6 @@ import './pages/index.css';
 
 import { createCard, likeСards, deleteСard } from './components/card.js'
 
-import { initialCards } from './components/cards.js'
-
 import { openPopup, closePopup } from './components/modal.js'
 
 import { enableValidation, clearValidation } from './components/validation.js'
@@ -30,7 +28,6 @@ const updateAvatarModal = document.querySelector('.popup_type_avatar');
 const imgAvatar = document.querySelector('.profile__image');   
 const linkAvatar = document.querySelector('.popup__input_type_card-avatar');   
 const btnAvatar = updateAvatarModal.querySelector('.popup__button') 
-const modalEditElement = document.querySelector('.popup__form');
 const deleteCardModal = document.querySelector('.popup_type_delete');
 const deleteAssent = deleteCardModal.querySelector('.popup__button');
 const validationConfig = {
@@ -52,14 +49,15 @@ const renderCard = (cardsData, userId) => {
       likeСards,
       clickImage
     );
-    cardList.prepend(cardElement);
+    cardList.append(cardElement);
   });
 };
+
+enableValidation(validationConfig); 
 
 createProfileButton.addEventListener('click', function () {
   openPopup(createCardModal);
   clearValidation(createCardModal, validationConfig);
-  enableValidation(validationConfig);
 });
 
 editProfileButton.addEventListener('click', function () {
@@ -69,7 +67,6 @@ editProfileButton.addEventListener('click', function () {
   jobInput.value = jobTitleBlock;
   openPopup(editProfileModal);
   clearValidation(editProfileModal, validationConfig);
-  enableValidation(validationConfig);
 });
 
 function handleProfileFormSubmit(evt) {
@@ -157,7 +154,7 @@ deleteAssent.addEventListener('click', function (evt) {
 });
 
 // 1. Редактирование аватара профиля
-function avatarModalSubmit(evt) {
+function submitModalAvatar(evt) {
   evt.preventDefault();
   const submitButtonText = btnAvatar.textContent;
   btnAvatar.textContent = "Сохранение ...";
@@ -182,10 +179,9 @@ function avatarModalSubmit(evt) {
 imgAvatar.addEventListener('click', function () {
   openPopup(updateAvatarModal);
   clearValidation(updateAvatarModal, validationConfig);
-  enableValidation(validationConfig);
 });
 
-updateAvatarModal.addEventListener("submit", avatarModalSubmit);
+updateAvatarModal.addEventListener("submit", submitModalAvatar);
 
 // 2. Промис карточек
 Promise.all([getDataUser(), getDataCards()]) 
@@ -202,3 +198,5 @@ Promise.all([getDataUser(), getDataCards()])
       пользователе страницы, либо отобразить карточки: ${err}`
     );
 });
+
+
